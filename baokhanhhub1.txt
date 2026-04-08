@@ -1,0 +1,102 @@
+-- BaoKhanh Hub PRO MAX
+
+getgenv().BaoKhanhAvatar = "rbxassetid://0" -- https://create.roblox.com/store/asset/90963323870650/Meowl-Cat-Meme-Funny-Obby-Tower-Fun-Game-Coo
+
+-- UI LIB ĐƠN GIẢN
+local gui = Instance.new("ScreenGui", game.CoreGui)
+local main = Instance.new("Frame", gui)
+local sidebar = Instance.new("Frame", main)
+local content = Instance.new("Frame", main)
+
+main.Size = UDim2.new(0,500,0,300)
+main.Position = UDim2.new(0.5,-250,0.5,-150)
+main.BackgroundColor3 = Color3.fromRGB(25,25,25)
+
+sidebar.Size = UDim2.new(0,120,1,0)
+sidebar.BackgroundColor3 = Color3.fromRGB(35,35,35)
+
+content.Size = UDim2.new(1,-120,1,0)
+content.Position = UDim2.new(0,120,0,0)
+content.BackgroundColor3 = Color3.fromRGB(30,30,30)
+
+-- Avatar
+local avatar = Instance.new("ImageLabel", sidebar)
+avatar.Size = UDim2.new(0,80,0,80)
+avatar.Position = UDim2.new(0.5,-40,0,10)
+avatar.Image = getgenv().BaoKhanhAvatar
+avatar.BackgroundTransparency = 1
+
+-- Tabs
+local tabs = {"Farm","Teleport","Player"}
+local pages = {}
+
+for i,v in pairs(tabs) do
+    local btn = Instance.new("TextButton", sidebar)
+    btn.Size = UDim2.new(1,0,0,40)
+    btn.Position = UDim2.new(0,0,0,100 + (i-1)*45)
+    btn.Text = v
+    btn.BackgroundColor3 = Color3.fromRGB(50,50,50)
+    btn.TextColor3 = Color3.fromRGB(255,255,255)
+
+    local page = Instance.new("Frame", content)
+    page.Size = UDim2.new(1,0,1,0)
+    page.Visible = false
+    pages[v] = page
+
+    btn.MouseButton1Click:Connect(function()
+        for _,p in pairs(pages) do p.Visible = false end
+        page.Visible = true
+    end)
+end
+
+-- ========== FARM TAB ==========
+local farmPage = pages["Farm"]
+local farmBtn = Instance.new("TextButton", farmPage)
+
+farmBtn.Size = UDim2.new(0,200,0,50)
+farmBtn.Position = UDim2.new(0,20,0,20)
+farmBtn.Text = "Auto Farm: OFF"
+farmBtn.BackgroundColor3 = Color3.fromRGB(60,60,60)
+farmBtn.TextColor3 = Color3.fromRGB(255,255,255)
+
+local autofarm = false
+farmBtn.MouseButton1Click:Connect(function()
+    autofarm = not autofarm
+    farmBtn.Text = autofarm and "Auto Farm: ON" or "Auto Farm: OFF"
+
+    while autofarm do
+        wait(1)
+        print("Farm...")
+    end
+end)
+
+-- ========== TELEPORT TAB ==========
+local tpPage = pages["Teleport"]
+local tpBtn = Instance.new("TextButton", tpPage)
+
+tpBtn.Size = UDim2.new(0,200,0,50)
+tpBtn.Position = UDim2.new(0,20,0,20)
+tpBtn.Text = "Teleport (Test)"
+tpBtn.BackgroundColor3 = Color3.fromRGB(60,60,60)
+tpBtn.TextColor3 = Color3.fromRGB(255,255,255)
+
+tpBtn.MouseButton1Click:Connect(function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0,50,0)
+end)
+
+-- ========== PLAYER TAB ==========
+local playerPage = pages["Player"]
+local speedBtn = Instance.new("TextButton", playerPage)
+
+speedBtn.Size = UDim2.new(0,200,0,50)
+speedBtn.Position = UDim2.new(0,20,0,20)
+speedBtn.Text = "Speed x2"
+speedBtn.BackgroundColor3 = Color3.fromRGB(60,60,60)
+speedBtn.TextColor3 = Color3.fromRGB(255,255,255)
+
+speedBtn.MouseButton1Click:Connect(function()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 32
+end)
+
+-- mở tab đầu
+pages["Farm"].Visible = true
