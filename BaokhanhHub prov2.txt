@@ -1,0 +1,56 @@
+-- BaoKhanh Hub v2
+
+-- Loading UI
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local Text = Instance.new("TextLabel")
+
+ScreenGui.Parent = game.CoreGui
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(20,20,20)
+Frame.Size = UDim2.new(0,300,0,150)
+Frame.Position = UDim2.new(0.5,-150,0.5,-75)
+
+Text.Parent = Frame
+Text.Size = UDim2.new(1,0,1,0)
+Text.Text = "BaoKhanh Hub Loading..."
+Text.TextColor3 = Color3.fromRGB(255,255,255)
+Text.BackgroundTransparency = 1
+
+wait(2)
+
+ScreenGui:Destroy()
+
+-- Main UI
+local gui = Instance.new("ScreenGui", game.CoreGui)
+local main = Instance.new("Frame", gui)
+local button = Instance.new("TextButton", main)
+
+main.Size = UDim2.new(0,250,0,150)
+main.Position = UDim2.new(0.5,-125,0.5,-75)
+main.BackgroundColor3 = Color3.fromRGB(30,30,30)
+
+button.Size = UDim2.new(0,200,0,50)
+button.Position = UDim2.new(0.5,-100,0.5,-25)
+button.Text = "Auto Farm: OFF"
+button.BackgroundColor3 = Color3.fromRGB(50,50,50)
+button.TextColor3 = Color3.fromRGB(255,255,255)
+
+local autofarm = false
+
+button.MouseButton1Click:Connect(function()
+    autofarm = not autofarm
+    
+    if autofarm then
+        button.Text = "Auto Farm: ON"
+    else
+        button.Text = "Auto Farm: OFF"
+    end
+    
+    while autofarm do
+        wait(1)
+        print("Đang farm...")
+        -- thêm code farm ở đây
+    end
+end)
